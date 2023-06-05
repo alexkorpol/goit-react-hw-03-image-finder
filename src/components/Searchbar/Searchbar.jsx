@@ -1,23 +1,69 @@
-import React from 'react';
-import {SearchForm, SearchFormButton, SearchFormButtonLabel, SearchFormInput, SearchbarHeader } from './Searchbar.styled';
+import React, { Component } from 'react';
+import { SearchForm, SearchFormButton, SearchFormInput, SearchbarHeader } from './Searchbar.styled';
+import { HiMagnifyingGlass } from 'react-icons/hi2';
 
-export default function Searchbar() {
-  return (
-<SearchbarHeader class="searchbar">
-  <SearchForm class="form">
-    <SearchFormButton type="submit" class="button">
-      <SearchFormButtonLabel class="button-label">Search</SearchFormButtonLabel>
-    </SearchFormButton>
 
-    <SearchFormInput
-      class="input"
-      type="text"
-      autocomplete="off"
-      autofocus
-      placeholder="Search images and photos"
-    />
-  </SearchForm>
-</SearchbarHeader>
+const INITIAL_STATE = {
+  query: '',
+};
 
-  );
+export default class Searchbar extends Component {
+
+  state = {
+    ...INITIAL_STATE,
+  };
+
+  onChange = e => {
+    this.setState({ query: e.target.value.trim()});
+  };
+
+  onSubmit = e => {
+    e.preventDefault();
+
+    const { query } = this.state;
+
+    if (query === ""){
+      alert("The search string cannot be empty. Please specify your search query.");
+      return;
+    }
+
+    this.props.onSubmit(query);
+
+    console.log("this.props.onSubmit(query)", this.props.onSubmit(query));
+
+    this.reset();
+  };
+
+  reset = () => this.setState({ ...INITIAL_STATE });
+
+  render() {
+    const { query } = this.state;
+
+
+
+    return (
+      <>
+        <SearchbarHeader >
+        <SearchForm onSubmit={this.onSubmit}>
+            <SearchFormButton type="submit" >
+              <HiMagnifyingGlass size="24" />
+          </SearchFormButton>
+
+          <SearchFormInput
+            className="input"
+            type="text"
+            autocomplete="off"
+            autoFocus
+            placeholder="Search images and photos"
+            onChange={this.onChange}
+            value={query}
+          />
+        </SearchForm>
+      </SearchbarHeader>
+
+      </>
+
+
+    );
+  }
 }
