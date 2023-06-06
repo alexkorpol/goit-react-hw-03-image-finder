@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { SearchForm, SearchFormButton, SearchFormInput, SearchbarHeader } from './Searchbar.styled';
 import { HiMagnifyingGlass } from 'react-icons/hi2';
+import Notiflix from 'notiflix';
 
 
 const INITIAL_STATE = {
@@ -23,14 +24,11 @@ export default class Searchbar extends Component {
     const { query } = this.state;
 
     if (query === ""){
-      alert("The search string cannot be empty. Please specify your search query.");
+       Notiflix.Notify.info('Please enter keyword for photos you are looking for')
       return;
     }
-
+    
     this.props.onSubmit(query);
-
-    console.log("this.props.onSubmit(query)", this.props.onSubmit(query));
-
     this.reset();
   };
 
@@ -67,3 +65,4 @@ export default class Searchbar extends Component {
     );
   }
 }
+

@@ -1,14 +1,14 @@
-import React from 'react';
+// import React from 'react';
+import PropTypes from 'prop-types';
 import { CardItem, ImageGalleryItemImage } from './ImageGalleryItem.styled';
 
 
-const ImageGalleryItem = ({ images = [] }) => {
+const ImageGalleryItem = ({ images = [], openModal }) => {
   return (
-
     <>
       {images.map(({ id, webformatURL, tags, largeImageURL }) => (
-        <CardItem key={id}>
-          <ImageGalleryItemImage src={webformatURL} alt={tags} data-largeimageurl={largeImageURL} />
+        <CardItem key={id} onClick={e => {e.preventDefault(); openModal(largeImageURL, tags)}}>
+          <ImageGalleryItemImage src={webformatURL} alt={tags} loading="lazy"/>
         </CardItem>
       ))}
     </>
@@ -19,15 +19,8 @@ const ImageGalleryItem = ({ images = [] }) => {
 export default ImageGalleryItem
 
 
+ImageGalleryItem.propTypes = {
+  images: PropTypes.array.isRequired,
+  openModal: PropTypes.func.isRequired,
+};
 
-// export const ImageGallery = ({ images = [] }) => {
-//   return (
-//     <Grid>
-//       {images.map(({ id, avg_color, src: { large }, alt }) => (
-//         <CardItem key={id} color={avg_color}>
-//           <img src={large} alt={alt} />
-//         </CardItem>
-//       ))}
-//     </Grid>
-//   );
-// };
