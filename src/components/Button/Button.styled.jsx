@@ -5,7 +5,7 @@ export const Button = styled.button`
 
   margin-left: auto;
   margin-right: auto;
-  margin-top: 40px;
+  margin-top: 10px;
 
   color: white;
   background-color: #3f51b5;
